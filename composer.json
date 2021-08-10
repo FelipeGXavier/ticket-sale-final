@@ -6,5 +6,11 @@
             "email": "felipe.xavier@effecti.com.br"
         }
     ],
-    "require": {}
+    "require": {},
+    "autoload": {
+        "psr-4": {
+            "App\\": "src/",
+            "Core\\": "core/"
+        }
+    }
 }
