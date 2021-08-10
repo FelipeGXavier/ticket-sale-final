@@ -1,0 +1,10 @@
+{
+    "name": "xavier/ticket-sale-final",
+    "authors": [
+        {
+            "name": "felipeeffecti",
+            "email": "felipe.xavier@effecti.com.br"
+        }
+    ],
+    "require": {}
+}
