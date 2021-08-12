@@ -6,11 +6,15 @@
             "email": "felipe.xavier@effecti.com.br"
         }
     ],
-    "require": {},
+    "require": {
+      "ext-pdo": "*"
+    },
     "autoload": {
         "psr-4": {
             "App\\": "src/",
-            "Core\\": "core/"
+            "Core\\": "core/",
+            "App\\Controller\\": "src/controller",
+            "App\\Model\\": "src/model"
         }
     }
 }

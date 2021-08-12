@@ -2,8 +2,6 @@
 
 namespace Core;
 
-use Core\DatasourceConnection;
-
 abstract class AbstractDAO
 {
 

@@ -7,6 +7,9 @@ use Core\View;
 class Controller
 {
 
+    /**
+     * @var Request
+    */
 	protected $request;
 	protected $view;
 
