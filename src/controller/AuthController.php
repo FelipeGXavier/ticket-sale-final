@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Model\UserModel;
 use App\PasswordService;
 use Core\Controller;
 use Core\Session;
@@ -32,8 +33,14 @@ class AuthController extends Controller
         $schema = Validator::validate($input);
         $schema['result']['user_type'] = $userType;
         $schema['result']['password'] = (new PasswordService())->hash($schema['result']['password']);
+        $schema['result']['accept'] = true;
+        $schema['result']['welcome'] = true;
         if(!empty($schema['errors'])) {
             $this->view->render('login/create_login', ['message' => 'Campos inválidos']);
+        }
+        if($schema['result']['user_type'] == UserModel::USER_TYPE_AGENT) {
+            $schema['result']['accept'] = false;
+            $schema['result']['welcome'] = false;
         }
         $this->userModel->create($schema['result']);
         $this->view->redirect('create-login');
@@ -49,10 +56,16 @@ class AuthController extends Controller
         if(!empty($user)) {
             $passwordService = new PasswordService();
             if($passwordService->compare($schema['result']['password'], $user['password'])){
-                Session::get("email");
                 Session::set("user_type", $user['user_type']);
-                Session::set("email", $user['email']);
-                $this->view->redirect('login');
+                Session::set("user_id", $user['id']);
+                Session::set("name", $user['name']);
+                Session::set("welcome", $user['welcome']);
+                Session::set("accept", $user['accept']);
+                if($user['user_type'] == UserModel::USER_TYPE_AGENT && !$user['welcome']) {
+                    $this->view->redirect('create-agency');
+                }else {
+                    $this->view->redirect('welcome');
+                }
             }
         }
         $this->view->render('login/login', ['message' => 'Credenciais incorretas']);

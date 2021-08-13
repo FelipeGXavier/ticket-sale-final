@@ -6,31 +6,13 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-    <?php require_once('bootstrap.php') ?>
+    <?php require_once(PATH . '\public\layout\bootstrap.php') ?>
 </head>
 
-<style>
-.box {
-    padding: 1rem;
-}
 
-body {
-    overflow: hidden;
-}
-
-.form-box {
-    margin-top: 2rem;
-}
-</style>
 
 <body>
-
-    <nav aria-label="breadcrumb">
-        <ol class="breadcrumb">
-            <li class="breadcrumb-item active" aria-current="page">Home</li>
-        </ol>
-    </nav>
-
+    <?php require_once(PATH . '\public\layout\nav.php') ?>
     <main id="container">
         <div class="row d-flex justify-content-center form-box">
             <div class="col-md-4">
