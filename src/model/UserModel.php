@@ -9,7 +9,7 @@ class UserModel extends \Core\AbstractDAO
     const USER_TYPE_ADMIN = 2;
 
     public function create($input) {
-        $sql = 'INSERT INTO tbuser (name, email, password, birth, user_type, accept) VALUES (?, ?, ?, ?, ?, ?)';
+        $sql = 'INSERT INTO tbuser (name, email, password, birth, user_type, accept, welcome) VALUES (?, ?, ?, ?, ?, ?, ?)';
         return $this->raw($sql, array_values($input));
     }
 

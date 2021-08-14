@@ -69,19 +69,29 @@ body {
                 echo '<li class="nav-item"><a class="nav-link" href="/approvals">Aprovações</a></li>';
             } ?>
 
-            <?php if(isset($_SESSION['user_type']) && $_SESSION['user_type'] == 0) {
+            <?php 
+                if(isset($_SESSION['user_type']) && $_SESSION['user_type'] == 0) {
                   if($_SESSION['accept']) {
-                    echo '<li class="nav-item"><a class="nav-link disabled" href="#">Meus Anúncios</a></li>';    
-                }else {
                     echo '<li class="nav-item"><a class="nav-link" href="/agent-ads">Meus Anúncios</a></li>';    
+                } else {
+                    echo '<li class="nav-item"><a class="nav-link disabled" href="#">Meus Anúncios</a></li>';    
                 }
             } ?>
-           
+
+            <?php 
+                if(isset($_SESSION['user_type']) && $_SESSION['user_type'] == 0) {
+                  if($_SESSION['accept']) {
+                    echo '<li class="nav-item"><a class="nav-link" href="/create-show">Criar Show</a></li>';    
+                } else {
+                    echo '<li class="nav-item"><a class="nav-link disabled" href="#">Criar Show</a></li>';    
+                }
+            } ?>
+
             <?php if(isset($_SESSION['user_type']) && $_SESSION['user_type'] == 0) {
                 if($_SESSION['accept']) {
-                    echo '<li class="nav-item"><a class="nav-link disabled" href="#">Minhas Estatística</a></li>';    
-                }else {
                     echo '<li class="nav-item"><a class="nav-link" href="/stats">Minhas Estatística</a></li>';    
+                }else {
+                    echo '<li class="nav-item"><a class="nav-link disabled" href="#">Minhas Estatística</a></li>';    
                 }
             } ?>
         </ul>

@@ -61,6 +61,9 @@ class AuthController extends Controller
                 Session::set("name", $user['name']);
                 Session::set("welcome", $user['welcome']);
                 Session::set("accept", $user['accept']);
+                if($user['user_type'] == UserModel::USER_TYPE_ADMIN) {
+                    $this->view->redirect('approve');
+                }
                 if($user['user_type'] == UserModel::USER_TYPE_AGENT && !$user['welcome']) {
                     $this->view->redirect('create-agency');
                 }else {

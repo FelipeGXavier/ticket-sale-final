@@ -13,11 +13,13 @@
 <main class="wrapper-menu">
     <div class="alert alert-primary" role="alert">
         <?php 
-        if($_SESSION['accept']) {
+        if(!$_SESSION['accept'] && $_SESSION['user_type'] == 0) {
             echo "Quase lá, agora você precisa aguardar nossa aprovação para começar a criar anúncios!";
-        }else {
+        }else if ($_SESSION['welcome']) {
             $name = $_SESSION['name'] ?? "";
             echo "Bem vindo $name!";
+        }else {
+            header("Location: login");
         } ?>
     </div>
 </main>

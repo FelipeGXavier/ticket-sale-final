@@ -17,9 +17,10 @@ class AgencyModel extends AbstractDAO
         try{
             $this->startTransaction();
             $this->raw($sqlAgency, array_values($agency));
+            $id = $this->getInsertId();
             foreach ($segments as $segment) {
                 $insert[] = $segment;
-                $insert[] = $this->getInsertId();
+                $insert[] = $id;
                 $this->raw($sqlSegment, $insert);
             }
             $this->raw($sqlUpdateWelcome);
@@ -27,6 +28,26 @@ class AgencyModel extends AbstractDAO
         }catch (\Exception $e) {
             $this->rollback();
             throw $e;
+        }
+    }
+
+    public function createShow($show, $tickets) {
+        $sqlShow = "INSERT into tbshow (cep, thumbnail, title, description, address, start_date, end_date, user_id) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+        $sqlTicket = "INSERT into tbticket (description, price, qtd_ticket, show_id)  VALUES (?, ?, ?, ?)";
+        try{
+            $this->startTransaction();
+            $this->raw($sqlShow, array_values($show));
+            $id = $this->getInsertId();
+            foreach ($tickets as $ticket) {
+                $insert = array_values($ticket);
+                $insert[] = $id;
+                $this->raw($sqlTicket, array_values($insert));
+            }
+            $this->commit();
+            return true;
+        }catch (\Exception $e) {
+            $this->rollback();
+            return false;
         }
     }
 

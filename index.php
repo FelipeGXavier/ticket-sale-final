@@ -10,9 +10,11 @@ define('PATH', getcwd());
 define('ROOT_PATH', dirname(__DIR__) . '/');
 define('APP_DIRECTORY', 'ticket-sale-final');
 
+use App\Controller\AdminController;
 use App\Controller\AgencyController;
 use App\Controller\AuthController;
 use App\Datasource;
+use App\Model\AdminModel;
 use App\Model\AgencyModel;
 use App\Model\SegmentModel;
 use App\Model\UserModel;
@@ -28,24 +30,42 @@ if (!strrpos($fullPath, 'public')) {
     $datasource = new Datasource();
     $app = new App();
 
-    $app->get('/', function ($request) {
+    $app->get('/create-show', function ($request) {
         $view = new View();
-        $view->render('logged/approve');
+        $view->render('logged/show_form');
     });
 
-    $app->get('/agent-dashboard', function ($request) {
+    $app->post('/create-show', function ($request) use($datasource) {
+        $agencyController = new AgencyController($request, new SegmentModel($datasource), new AgencyModel($datasource));
+        $agencyController->postShow();
+    });
+
+
+    $app->get('/welcome', function ($request) {
         $view = new View();
-        $view->render('logged/agent_dashboard', ['title' => "Bem Vindo!"]);
+        $view->render('logged/welcome', ['title' => "Bem Vindo!"]);
+    });
+
+    $app->get('/approve', function ($request) use($datasource) {
+       $adminModel = new AdminModel($datasource);
+       $adminController = new AdminController($request, $adminModel);
+       $adminController->getApproves();
+    });
+
+    $app->get('/approve-agent', function ($request) use($datasource) {
+        $adminModel = new AdminModel($datasource);
+        $adminController = new AdminController($request, $adminModel);
+        $adminController->getApprove();
     });
 
     $app->get('/create-agency', function ($request) use($datasource) {
-        $segmentController = new AgencyController($request, new SegmentModel($datasource), new AgencyModel($datasource));
-        $segmentController->getAgencyForm();
+        $agencyController = new AgencyController($request, new SegmentModel($datasource), new AgencyModel($datasource));
+        $agencyController->getAgencyForm();
     });
 
     $app->post('/create-agency', function ($request) use($datasource) {
-        $segmentController = new AgencyController($request, new SegmentModel($datasource), new AgencyModel($datasource));
-        $segmentController->postAgency();
+        $agencyController = new AgencyController($request, new SegmentModel($datasource), new AgencyModel($datasource));
+        $agencyController->postAgency();
     });
 
     $app->get('/create-login', function ($request) {

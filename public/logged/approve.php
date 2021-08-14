@@ -8,39 +8,46 @@
     <title>Document</title>
     <?php require_once(PATH . '\public\layout\bootstrap.php') ?>
     <?php require_once(PATH . '\public\layout\menu.php') ?>
-    
+    <?php if ($_SESSION['user_type'] != 2) header("Location: login"); ?>
+
 </head>
 
-<table class="table">
-  <thead>
-    <tr>
-      <th scope="col">#</th>
-      <th scope="col">First</th>
-      <th scope="col">Last</th>
-      <th scope="col">Handle</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th scope="row">1</th>
-      <td>Mark</td>
-      <td>Otto</td>
-      <td>@mdo</td>
-    </tr>
-    <tr>
-      <th scope="row">2</th>
-      <td>Jacob</td>
-      <td>Thornton</td>
-      <td>@fat</td>
-    </tr>
-    <tr>
-      <th scope="row">3</th>
-      <td>Larry</td>
-      <td>the Bird</td>
-      <td>@twitter</td>
-    </tr>
-  </tbody>
-</table>
+<main class="wrapper-menu">
+    <div class="row d-flex justify-content-center">
+        <div class="col-md-10">
+          <?php if(!empty($pendings)) { ?>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th scope="col">CNPJ</th>
+                        <th scope="col">Nome Fantasia</th>
+                        <th scope="col">Email</th>
+                        <th scope="col">Ação</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <?php 
+                      foreach($pendings as $pending) { 
+                        $cnpj = $pending['cnpj'];
+                        $fantasy_name = strtoupper($pending['fantasy_name']);
+                        $email = $pending['email'];
+                        $userId =  $pending['user_id'];
+                        echo "<tr>";
+                        echo "<td>$cnpj</td>";
+                        echo "<td>$fantasy_name</td>";
+                        echo "<td><a href='mailto: $email'>$email</a></td>";
+                        echo "<td><a href='/approve-agent?id=$userId'>Aprovar</a></td>";
+                      }
+                    ?>
+                </tbody>
+            </table>
+          <?php } else {
+            echo "<h4 style='text-align: center'>Nenhuma aprovação pendente";
+          } ?>
+        </div>
+    </div>
+
+</main>
 
 <body>
 
