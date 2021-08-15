@@ -15,7 +15,8 @@
             "App\\": "src/",
             "Core\\": "core/",
             "App\\Controller\\": "src/controller",
-            "App\\Model\\": "src/model"
+            "App\\Model\\": "src/model",
+            "Ajax\\": "ajax/"
         }
     }
 }
