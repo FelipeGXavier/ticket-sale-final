@@ -29,30 +29,39 @@
                             <th scope="col">Ingresso</th>
                             <th scope="col">Preço</th>
                             <th scope="col">Quantidade</th>
+                            <th scope="col">Remover</th>
                         </tr>
                     </thead>
-                   
+
                 </table>
-                <button id="checkout" class="btn btn-success">Finalizar Compra</button>
+                <button onclick="purchase()" id="checkout" class="btn btn-success">Finalizar Compra</button>
             </div>
         </div>
     </main>
 </body>
 <script>
+
+function getCheckout() {
     const checkoutItems = JSON.parse(localStorage.getItem("checkout")) || [];
     const showIds = [...new Set(checkoutItems.map(x => x['showId']))];
     const ticketIds = [...new Set(checkoutItems.map(x => x['ticketId']))];
     const form = new FormData();
+    form.append("json", JSON.stringify({
+        showIds,
+        ticketIds
+    }));
+    return form;
+}
 
-    form.append("json", JSON.stringify({showIds, ticketIds}));
-    fetch("/ajax/ticket_checkout.php", {
-        method: 'POST',
-        body: form
-    }).then(res => res.json()).then(res => {
-        const table = document.querySelector("table.table > thead");
-        let html = "";
-        res.tickets.forEach(ticket => {
-            html += `
+
+fetch("/ajax/ticket_checkout.php", {
+    method: 'POST',
+    body: getCheckout()
+}).then(res => res.json()).then(res => {
+    const table = document.querySelector("table.table > thead");
+    let html = "";
+    res.tickets.forEach(ticket => {
+        html += `
                 <tr>
                     <td>${ticket['fantasy_name']}</td>
                     <td>${ticket['title']}</td>
@@ -61,13 +70,24 @@
                     <td>1</td>
                 </tr>
             `;
-        });
-        const btn = document.getElementById("checkout");
-        const prices = res.tickets.map(ticket => ticket.price);
-        const totalPrice = prices.reduce((prev, curr) => prev + curr);
-        const totalHtml = `<p>Total R$: <b> ${totalPrice} </b> </p>`;
-        btn.insertAdjacentHTML('beforebegin', totalHtml);
-        table.insertAdjacentHTML('afterend', html);
     });
+    const btn = document.getElementById("checkout");
+    const prices = res.tickets.map(ticket => ticket.price);
+    const totalPrice = prices.reduce((prev, curr) => prev + curr);
+    const totalHtml = `<p>Total R$: <b> ${totalPrice} </b> </p>`;
+    btn.insertAdjacentHTML('beforebegin', totalHtml);
+    table.insertAdjacentHTML('afterend', html);
+});
+
+function purchase() {
+    fetch("/ajax/ticket_purchase.php", {
+        method: 'POST',
+        body: getCheckout()
+    }).then(res => res.json()).then(res => {
+        localStorage.removeItem("checkout");
+        window.location.href = "/checkout";
+    });
+}
 </script>
+
 </html>

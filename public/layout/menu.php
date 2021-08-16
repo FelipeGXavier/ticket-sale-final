@@ -87,6 +87,15 @@ body {
                 }
             } ?>
 
+            <?php 
+                if(isset($_SESSION['user_type']) && $_SESSION['user_type'] == 1) {
+                  if($_SESSION['accept']) {
+                    echo '<li class="nav-item"><a class="nav-link" href="/ticket-history">Minhas Compras</a></li>';    
+                } else {
+                    echo '<li class="nav-item"><a class="nav-link disabled" href="#">Minhas Compras</a></li>';    
+                }
+            } ?>
+
             <?php if(isset($_SESSION['user_type']) && $_SESSION['user_type'] == 0) {
                 if($_SESSION['accept']) {
                     echo '<li class="nav-item"><a class="nav-link" href="/stats">Minhas Estatística</a></li>';    

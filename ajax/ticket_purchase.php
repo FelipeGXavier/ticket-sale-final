@@ -12,4 +12,4 @@ $request = $request = new \Core\Request();
 $request->setParams($_SERVER['QUERY_STRING'] ?? []);
 $request->setAttributes($_POST);
 $agencyController = new SearchController($request, new SearchModel($datasource), new PurchaseModel($datasource));
-$agencyController->postCheckout();
+$agencyController->postPurchase();

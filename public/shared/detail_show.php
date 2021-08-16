@@ -35,8 +35,7 @@
     <main class="wrapper">
         <h1><?php echo $show[0]['title'] ?></h1>
         <div class="space-box">
-            <span><i
-                    class="far fa-clock icon-mr"></i><?php echo $show[0]['start_date'] . "<b> até </b>" . $show[0]['end_date']; ?></span>
+            <span><i class="far fa-clock icon-mr"></i><?php echo $show[0]['start_date'] . "<b> até </b>" . $show[0]['end_date']; ?></span>
         </div>
         <div class="space-box">
             <span><i class="fas fa-map-marker-alt icon-mr"></i><?php echo $show[0]['address'] ?></span>
@@ -66,6 +65,10 @@
 </body>
 <script>
 const addSaleBtn = [...document.getElementsByClassName("add-sale")];
+
+fetch(`/tracking?id=${getQueryStringValue('id')}`, {
+    method: 'GET'
+});
 
 addSaleBtn.forEach(btn => {
     btn.addEventListener("click", (e) => {

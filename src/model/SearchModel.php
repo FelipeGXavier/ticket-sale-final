@@ -2,6 +2,7 @@
 
 namespace App\Model;
 
+use App\Util\Util;
 use Core\AbstractDAO;
 
 class SearchModel extends AbstractDAO
@@ -36,13 +37,9 @@ class SearchModel extends AbstractDAO
                     inner join tbshowagency t3 on t3.user_id = t2.id
                     inner join tbticket t4 on t4.show_id = t.id
                     where t4.id in ($qMarkTicket) and t.id in ($qMarksEvent);";
-        return $this->raw($sql, $this->flatten([$ticketIds, $showIds]))->fetch();
+        return $this->raw($sql, Util::flat([$ticketIds, $showIds]))->fetch();
     }
 
-    private function flatten(array $array) {
-        $return = array();
-        array_walk_recursive($array, function($a) use (&$return) { $return[] = $a; });
-        return $return;
-    }
+
 
 }

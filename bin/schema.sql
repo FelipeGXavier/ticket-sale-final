@@ -64,6 +64,23 @@ drop table tbuser;
  );
  
 
+ create table tbuserpurchase(
+ user_id int not null,
+ ticket_id int not null,
+ price_purchased float not null,
+ purchased_at date not null default now(),
+ primary key(user_id, ticket_id),
+ foreign key (user_id) references tbuser(id),
+ foreign key (ticket_id) references tbticket(id)
+ );
+ 
+create table tbclicktracking(
+id int not null primary key auto_increment,
+ip varchar(30) not null,
+show_id int not null,
+created_at date not null default now(),
+foreign key (show_id) references tbshow(id)
+);
 
  insert into tbsegment values (null, 'Música');
  insert into tbsegment values (null, 'Gastronomia');

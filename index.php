@@ -13,13 +13,18 @@ define('APP_DIRECTORY', 'ticket-sale-final');
 use App\Controller\AdminController;
 use App\Controller\AgencyController;
 use App\Controller\AuthController;
+use App\Controller\ClientController;
 use App\Controller\SearchController;
 use App\Datasource;
 use App\Model\AdminModel;
 use App\Model\AgencyModel;
+use App\Model\ClientModel;
+use App\Model\PurchaseModel;
 use App\Model\SearchModel;
 use App\Model\SegmentModel;
+use App\Model\StatsModel;
 use App\Model\UserModel;
+use App\Util\Util;
 use Core\App;
 use Core\Session;
 use Core\View;
@@ -34,12 +39,12 @@ if (!strrpos($fullPath, 'public')) {
     $app = new App();
 
     $app->get("/", function ($request) use ($datasource) {
-        $agencyController = new SearchController($request, new SearchModel($datasource));
+        $agencyController = new SearchController($request, new SearchModel($datasource), new PurchaseModel($datasource));
         $agencyController->getSearch();
     });
 
     $app->post("/checkout", function ($request) use ($datasource) {
-        $agencyController = new SearchController($request, new SearchModel($datasource));
+        $agencyController = new SearchController($request, new SearchModel($datasource), new PurchaseModel($datasource));
         $agencyController->postCheckout();
     });
 
@@ -49,7 +54,7 @@ if (!strrpos($fullPath, 'public')) {
     });
 
     $app->get("/detail", function ($request) use ($datasource) {
-        $agencyController = new SearchController($request, new SearchModel($datasource));
+        $agencyController = new SearchController($request, new SearchModel($datasource), new PurchaseModel($datasource));
         $agencyController->getDetail();
     });
 
@@ -63,10 +68,32 @@ if (!strrpos($fullPath, 'public')) {
         $agencyController->postShow();
     });
 
+    $app->get('/ticket-history', function ($request) use ($datasource) {
+        $clientController = new ClientController($request, new ClientModel($datasource));
+        $clientController->getTicketHistory();
+    });
+
+    $app->get("/tracking", function ($request) use ($datasource) {
+        $trackingModel = new StatsModel($datasource);
+        $id = $request->getParam("id") != null ? $request->getParam("id") : 0;
+        $trackingModel->tracking(Util::getIpRequest(), $id);
+    });
+
     $app->get('/welcome', function ($request) {
         $view = new View();
         $view->render('logged/welcome', ['title' => "Bem Vindo!"]);
     });
+
+    $app->get('/tracking-stats', function ($request) {
+        $view = new View();
+        $view->render('logged/stats_tracking');
+    });
+
+    $app->get('/stats', function ($request) {
+        $view = new View();
+        $view->render('logged/stats_list');
+    });
+
 
     $app->get('/approve', function ($request) use ($datasource) {
         $adminModel = new AdminModel($datasource);
