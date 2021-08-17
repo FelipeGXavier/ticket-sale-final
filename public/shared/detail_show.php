@@ -83,6 +83,7 @@ addSaleBtn.forEach(btn => {
             localStorage.removeItem("checkout");
             localStorage.setItem("checkout", JSON.stringify(items));
         }
+        window.location.href = '/checkout';
     });
 });
 

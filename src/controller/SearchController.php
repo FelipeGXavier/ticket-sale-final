@@ -21,7 +21,16 @@ class SearchController extends Controller
 
     public function getSearch()
     {
-        $shows = $this->searchModel->findShowsSearch();
+        $uf = $this->request->getParam("uf");
+        $keyword = $this->request->getParam("keyword");
+        $params = [];
+        if ($uf != null) {
+            $params['uf'] = $uf;
+        }
+        if ($keyword != null) {
+            $params['keyword'] = $keyword;
+        }
+        $shows = $this->searchModel->findShowsSearch($params);
         $this->view->render("shared/search", ['shows' => $shows]);
     }
 
@@ -47,7 +56,7 @@ class SearchController extends Controller
         $data = json_decode($this->request->getAttribute("json"), true);
         $loggedUser = Session::get("user_id");
         $userType = Session::get("user_type");
-        if(!$loggedUser || $loggedUser == 0 || $userType > 1) {
+        if (!$loggedUser || $loggedUser == 0 || $userType > 1) {
             $this->view->redirect('login');
         }
         $purchaseInfo = $this->searchModel->findCheckoutItems($data);

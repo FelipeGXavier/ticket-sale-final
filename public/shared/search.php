@@ -8,7 +8,7 @@ body {
 <div class="container mt-5 mb-5">
     <div class="p-2 bg-white px-4">
         <h4>Filtros</h4>
-        <form action="">
+        <form action="/" method="GET">
             <div class="row">
                 <div class="col-md-6">
                     <div class="form-group">
@@ -66,7 +66,7 @@ body {
         <div class="col-md-4 col-lg-4 mt-2">
             <div class="p-4 bg-white">
                 <div class="d-flex flex-column">
-                    <div><img class="img-fluid img-responsive" src="<?php echo $show['thumbnail'] ?>" width=""
+                    <div><img class="img-fluid img-responsive" src="<?php echo "../../bin/" . $show['thumbnail'] ?>" width=""
                             height="220"></div>
                     <div class="d-flex flex-column">
                         <div class="d-flex flex-row justify-content-between align-items-center">

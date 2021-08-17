@@ -7,6 +7,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <?php require_once(PATH . '\public\layout\bootstrap.php') ?>
+    <?php if ($_SESSION['user_type'] !== 0) header("Location: login"); ?>
+    <?php if ($_SESSION['welcome'] == true) header("Location: welcome"); ?>
 </head>
 <style>
 #title {
@@ -25,10 +27,10 @@
                     <div class="card-header">Informações da agência</div>
                     <div class="box">
                         <?php
-                    if (!empty($message)) {
-                        echo "<div class='alert alert-danger'><b>$message</b></div>";
-                    }
-                    ?>
+                            if (!empty($message)) {
+                                echo "<div class='alert alert-danger'><b>$message</b></div>";
+                            }
+                        ?>
                         <form action="/create-agency" method="POST">
                             <div class="form-group">
                                 <label>Nome Fantasia:</label>

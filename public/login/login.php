@@ -21,10 +21,20 @@ body {
 .form-box {
     margin-top: 2rem;
 }
+
+.register-link {
+    color: black;
+    text-decoration: none;
+}
+
+.register-link:hover {
+    color: black;
+    text-decoration: none;
+}
+
 </style>
 
 <body>
-
 
     <?php require_once(PATH . '\public\layout\nav.php') ?>
     <main id="container">
@@ -48,7 +58,7 @@ body {
                                 <input name="password" type="password" class="form-control" placeholder="Password">
                             </div>
                             <button class="btn btn-success" type="submit">Entrar</button>
-                            <a style="display: block; float: right" href="create-login">Criar Conta</a>
+                            <a style="display: block; float: right;" href="create-login" class="register-link">Criar Conta</a>
                     </div>
                     </form>
                 </div>

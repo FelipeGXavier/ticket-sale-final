@@ -8,9 +8,20 @@ use Core\AbstractDAO;
 class SearchModel extends AbstractDAO
 {
 
-    public function findShowsSearch()
+    public function findShowsSearch($params)
     {
-        $sql = "select id, thumbnail, title, start_date, end_date, address from tbshow";
+        $sql = "select id, thumbnail, title, start_date, end_date, address from tbshow WHERE 1 = 1";
+        if (isset($params['uf'])) {
+            $uf = $params['uf'];
+            $sql = "select t1.id, thumbnail, title, start_date, end_date, address from tbshow t1
+                        inner join tbuser t2 on t2.id = t1.user_id
+                        inner join tbshowagency t3 on t3.user_id = t2.id
+                        WHERE 1 = 1 and uf = '$uf'";
+        }
+        if (isset($params['keyword'])) {
+            $key= $params['keyword'];
+            $sql .= " and lower(title) like '%$key%'";
+        }
         return $this->raw($sql)->fetch();
     }
 
@@ -39,7 +50,6 @@ class SearchModel extends AbstractDAO
                     where t4.id in ($qMarkTicket) and t.id in ($qMarksEvent);";
         return $this->raw($sql, Util::flat([$ticketIds, $showIds]))->fetch();
     }
-
 
 
 }

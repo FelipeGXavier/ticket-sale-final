@@ -7,6 +7,8 @@
     <title>Document</title>
     <?php require_once(PATH . '\public\layout\bootstrap.php') ?>
     <?php require_once(PATH . '\public\layout\menu.php') ?>
+    <?php if ($_SESSION['user_type'] !== 0) header("Location: login"); ?>
+    <?php if ($_SESSION['accept'] == false) header("Location: welcome"); ?>
 </head>
 
 <main class="wrapper-menu">

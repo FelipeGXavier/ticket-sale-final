@@ -22,7 +22,7 @@ class Request
 
 	public function getParam($name)
 	{
-		return $this->params[$name];
+		return $this->params[$name] ?? null;
 	}
 
 	public function getAttribute($name)

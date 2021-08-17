@@ -9,7 +9,17 @@
     <?php require_once(PATH . '\public\layout\bootstrap.php') ?>
 </head>
 
+<style>
+    .register-link {
+    color: black;
+    text-decoration: none;
+}
 
+.register-link:hover {
+    color: black;
+    text-decoration: none;
+}
+</style>
 
 <body>
     <?php require_once(PATH . '\public\layout\nav.php') ?>
@@ -50,7 +60,7 @@
                             </div>
 
                             <button class="btn btn-success" type="submit">Registrar</button>
-                            <a style="display: block; float: right" href="login">Fazer Login</a>
+                            <a style="display: block; float: right;" href="login" class="register-link">Entrar</a>
                     </div>
                     </form>
                 </div>

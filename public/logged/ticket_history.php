@@ -1,8 +1,5 @@
 <!DOCTYPE html>
 <html lang="en">
-
-
-
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -30,6 +27,7 @@
                 <div>Provido por: <b><?php echo $ticket['fantasy_name'] ?></b></div>
                 <div>Tipo do ingresso: <b><?php echo $ticket['description'] ?></b></div>
                 <div>Comprado em: <b><?php echo $ticket['purchased_at'] ?></b></div>
+                <div>Comprado por: R$<b><?php echo $ticket['price_purchased'] ?></b></div>
             </div>
             <?php } ?>
         </div>

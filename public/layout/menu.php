@@ -53,7 +53,7 @@ body {
 </style>
 
 <nav class="navbar navbar-expand-lg navbar-dark fixed-top bg-dark">
-    <a class="navbar-brand" href="#">Projeto</a>
+    <a class="navbar-brand" href="/">Projeto</a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse"
         aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
@@ -61,9 +61,6 @@ body {
 
     <div class="collapse navbar-collapse" id="navbarCollapse">
         <ul class="navbar-nav mr-auto sidenav" id="navAccordion">
-            <?php if(isset($_SESSION['user_type'])) {
-                echo '<li class="nav-item"><a class="nav-link" href="/account">Minha Conta</a></li>';    
-            } ?>
 
             <?php if(isset($_SESSION['user_type']) && $_SESSION['user_type'] == 2) {
                 echo '<li class="nav-item"><a class="nav-link" href="/approvals">Aprovações</a></li>';
@@ -72,7 +69,7 @@ body {
             <?php 
                 if(isset($_SESSION['user_type']) && $_SESSION['user_type'] == 0) {
                   if($_SESSION['accept']) {
-                    echo '<li class="nav-item"><a class="nav-link" href="/agent-ads">Meus Anúncios</a></li>';    
+                    echo '<li class="nav-item"><a class="nav-link" href="/show-list">Meus Anúncios</a></li>';    
                 } else {
                     echo '<li class="nav-item"><a class="nav-link disabled" href="#">Meus Anúncios</a></li>';    
                 }

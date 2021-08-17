@@ -44,13 +44,20 @@ if (!strrpos($fullPath, 'public')) {
     });
 
     $app->post("/checkout", function ($request) use ($datasource) {
-        $agencyController = new SearchController($request, new SearchModel($datasource), new PurchaseModel($datasource));
-        $agencyController->postCheckout();
+        $view = new View();
+        if (Session::get("user_type") !== null &&  Session::get("user_type") == UserModel::USER_TYPE_CLIENT) {
+            $searchController = new SearchController($request, new SearchModel($datasource), new PurchaseModel($datasource));
+            $searchController->postCheckout();
+        }
+        $view->redirect("/");
     });
 
     $app->get("/checkout", function ($request) use ($datasource) {
         $view = new View();
-        $view->render("shared/checkout");
+        if (Session::get("user_type") !== null &&  Session::get("user_type") == UserModel::USER_TYPE_CLIENT) {
+            $view->render("shared/checkout");
+        }
+        $view->redirect("/");
     });
 
     $app->get("/detail", function ($request) use ($datasource) {
@@ -60,17 +67,28 @@ if (!strrpos($fullPath, 'public')) {
 
     $app->get('/create-show', function ($request) {
         $view = new View();
-        $view->render('logged/show_form');
+        if (Session::get("user_type") !== null &&  Session::get("user_type") == UserModel::USER_TYPE_AGENT) {
+            $view->render('logged/show_form');
+        }
+        $view->redirect("/");
     });
 
     $app->post('/create-show', function ($request) use ($datasource) {
-        $agencyController = new AgencyController($request, new SegmentModel($datasource), new AgencyModel($datasource));
-        $agencyController->postShow();
+        $view = new View();
+        if (Session::get("user_type") !== null &&  Session::get("user_type") == UserModel::USER_TYPE_AGENT) {
+            $agencyController = new AgencyController($request, new SegmentModel($datasource), new AgencyModel($datasource));
+            $agencyController->postShow();
+        }
+        $view->redirect("/");
     });
 
     $app->get('/ticket-history', function ($request) use ($datasource) {
-        $clientController = new ClientController($request, new ClientModel($datasource));
-        $clientController->getTicketHistory();
+        $view = new View();
+        if (Session::get("user_type") !== null &&  Session::get("user_type") == UserModel::USER_TYPE_CLIENT) {
+            $clientController = new ClientController($request, new ClientModel($datasource));
+            $clientController->getTicketHistory();
+        }
+        $view->redirect("/");
     });
 
     $app->get("/tracking", function ($request) use ($datasource) {
@@ -81,40 +99,127 @@ if (!strrpos($fullPath, 'public')) {
 
     $app->get('/welcome', function ($request) {
         $view = new View();
-        $view->render('logged/welcome', ['title' => "Bem Vindo!"]);
+        if (Session::get("user_type") !== null && Session::get("user_id") != null) {
+            $view->render('logged/welcome', ['title' => "Bem Vindo!"]);
+        }
+        $view->redirect("/");
     });
 
     $app->get('/tracking-stats', function ($request) {
         $view = new View();
-        $view->render('logged/stats_tracking');
+        if (Session::get("user_type") !== null &&  Session::get("user_type") == UserModel::USER_TYPE_AGENT) {
+            $view->render('logged/stats_tracking');
+        }
+        $view->redirect("/");
+
+    });
+
+    $app->get('/sales-stats', function ($request) {
+        $view = new View();
+        if (Session::get("user_type") !== null && Session::get("user_type") == UserModel::USER_TYPE_AGENT) {
+            $view->render('logged/stats_sales');
+        }
+        $view->redirect("/");
+    });
+
+    $app->get('/export-csv', function ($request) use ($datasource) {
+        $view = new View();
+        if (Session::get("user_type") !== null && Session::get("user_type") == UserModel::USER_TYPE_AGENT) {
+            $agencyController = new AgencyController($request, new SegmentModel($datasource), new AgencyModel($datasource));
+            $agencyController->getExportCsv();
+        }
+        $view->redirect("/");
     });
 
     $app->get('/stats', function ($request) {
         $view = new View();
-        $view->render('logged/stats_list');
+        if (Session::get("user_type") !== null && Session::get("user_type") == UserModel::USER_TYPE_AGENT) {
+            $view->render('logged/stats_list');
+        }
+        $view->redirect("/");
     });
 
+    $app->get('/show-list', function ($request) use ($datasource) {
+        $view = new View();
+        if (Session::get("user_type") !== null &&  Session::get("user_type") == UserModel::USER_TYPE_AGENT) {
+            $agencyController = new AgencyController($request, new SegmentModel($datasource), new AgencyModel($datasource));
+            $agencyController->getShows();
+        }
+        $view->redirect("/");
+    });
+
+    $app->get('/show', function ($request) use ($datasource) {
+        $view = new View();
+        if (Session::get("user_type") !== null &&  Session::get("user_type") == UserModel::USER_TYPE_AGENT) {
+            $agencyController = new AgencyController($request, new SegmentModel($datasource), new AgencyModel($datasource));
+            $agencyController->getShow();
+        }
+        $view->redirect("/");
+    });
+
+    $app->get('/ticket-show', function ($request) use ($datasource) {
+        $view = new View();
+        if (Session::get("user_type") !== null &&  Session::get("user_type") == UserModel::USER_TYPE_AGENT) {
+            $agencyController = new AgencyController($request, new SegmentModel($datasource), new AgencyModel($datasource));
+            $agencyController->getTicketsShow();
+        }
+        $view->redirect("/");
+    });
+
+    $app->post('/update-ticket', function ($request) use ($datasource) {
+        $view = new View();
+        if (Session::get("user_type") !== null &&  Session::get("user_type") == UserModel::USER_TYPE_AGENT) {
+            $agencyController = new AgencyController($request, new SegmentModel($datasource), new AgencyModel($datasource));
+            $agencyController->postUpdateTicket();
+        }
+        $view->redirect("/");
+    });
+
+    $app->post('/update-show', function ($request) use ($datasource) {
+        $view = new View();
+        if (Session::get("user_type") !== null && Session::get("user_type") == UserModel::USER_TYPE_AGENT) {
+            $agencyController = new AgencyController($request, new SegmentModel($datasource), new AgencyModel($datasource));
+            $agencyController->postUpdateShow();
+        }
+        $view->redirect("/");
+    });
 
     $app->get('/approve', function ($request) use ($datasource) {
-        $adminModel = new AdminModel($datasource);
-        $adminController = new AdminController($request, $adminModel);
-        $adminController->getApproves();
+        $view = new View();
+        if (Session::get("user_type") !== null &&  Session::get("user_type") == UserModel::USER_TYPE_ADMIN) {
+            $adminModel = new AdminModel($datasource);
+            $adminController = new AdminController($request, $adminModel);
+            $adminController->getApproves();
+        }
+        $view->redirect("/");
     });
 
     $app->get('/approve-agent', function ($request) use ($datasource) {
-        $adminModel = new AdminModel($datasource);
-        $adminController = new AdminController($request, $adminModel);
-        $adminController->getApprove();
+        $view = new View();
+        if (Session::get("user_type") !== null &&  Session::get("user_type") == UserModel::USER_TYPE_ADMIN) {
+            $adminModel = new AdminModel($datasource);
+            $adminController = new AdminController($request, $adminModel);
+            $adminController->getApprove();
+        }
+        $view->redirect("/");
     });
 
     $app->get('/create-agency', function ($request) use ($datasource) {
-        $agencyController = new AgencyController($request, new SegmentModel($datasource), new AgencyModel($datasource));
-        $agencyController->getAgencyForm();
+        $view = new View();
+        if (Session::get("user_type") !== null &&  Session::get("user_type") == UserModel::USER_TYPE_AGENT) {
+            $agencyController = new AgencyController($request, new SegmentModel($datasource), new AgencyModel($datasource));
+            $agencyController->getAgencyForm();
+        }
+        $view->redirect("/");
     });
 
     $app->post('/create-agency', function ($request) use ($datasource) {
-        $agencyController = new AgencyController($request, new SegmentModel($datasource), new AgencyModel($datasource));
-        $agencyController->postAgency();
+        $view = new View();
+        if (Session::get("user_type") !== null &&  Session::get("user_type") == UserModel::USER_TYPE_AGENT) {
+            $agencyController = new AgencyController($request, new SegmentModel($datasource), new AgencyModel($datasource));
+            $agencyController->postAgency();
+        }
+        $view->redirect("/");
     });
 
     $app->get('/create-login', function ($request) {
@@ -123,10 +228,11 @@ if (!strrpos($fullPath, 'public')) {
     });
 
     $app->get('/login', function ($request) {
+        $view = new View();
         if (!Session::get("user_type")) {
-            $view = new View();
             $view->render('login/login');
         }
+        $view->redirect('/');
     });
 
     $app->post('/create-login', function ($request) use ($datasource) {

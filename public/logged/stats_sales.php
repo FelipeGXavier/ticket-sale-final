@@ -22,13 +22,8 @@
                         <li class="breadcrumb-item"><a href="/stats">Voltar</a></li>
                     </ol>
                 </nav>
-                <div class="row">
-                    <div class="col-md-6">
-                        <div id="chart_div_click"></div>
-                    </div>
-                    <div class="col-md-6">
-                        <div id="chart_div_click_show"></div>
-                    </div>
+                <div class="col-md-12 d-flex justify-content-center">
+                    <div id="chart_div"></div>
                 </div>
             </div>
         </div>
@@ -37,7 +32,7 @@
 
 <script type="text/javascript">
 function fetchTrackingData() {
-    return fetch("/ajax/tracking_stats.php", {
+    return fetch("/ajax/sales_stats.php", {
         method: 'GET'
     });
 }
@@ -52,25 +47,21 @@ google.charts.setOnLoadCallback(drawChart);
 function drawChart() {
 
     fetchTrackingData().then(res => res.json()).then(info => {
-        var data = new google.visualization.DataTable();
-        data.addColumn('string', 'Dia');
-        data.addColumn('number', 'Clicks');
-        data.addRows(info['click_day']);
 
-        var dataClickShow = new google.visualization.DataTable();
-        dataClickShow.addColumn('string', 'Evento');
-        dataClickShow.addColumn('number', 'Clicks');
-        dataClickShow.addRows(info['click_show']);
+        var data = new google.visualization.DataTable();
+        data.addColumn('string', 'Evento');
+        data.addColumn('number', 'Vendas');
+        data.addRows(info['ticket_sales']);
 
         var options = {
             'width': 800,
             'height': 600
         };
 
-        var chartClick = new google.visualization.LineChart(document.getElementById('chart_div_click'));
-        var chartClickShow = new google.visualization.ColumnChart(document.getElementById('chart_div_click_show'));
-        chartClick.draw(data, Object.assign(options, {title: 'Cliques por dia'}));
-        chartClickShow.draw(dataClickShow, Object.assign(options, {title: 'Eventos mais acessados'}));
+        var chart = new google.visualization.ColumnChart(document.getElementById('chart_div'));
+        chart.draw(data, Object.assign(options, {
+            title: 'Ingressos Vendidos por Evento'
+        }));
     });
 
 

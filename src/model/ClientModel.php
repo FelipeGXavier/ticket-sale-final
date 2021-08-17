@@ -9,12 +9,12 @@ class ClientModel extends AbstractDAO
 
     public function findTicketHistory($userId)
     {
-        $sql = " select t3.fantasy_name, t4.purchased_at, t5.description, t.id, title, start_date, end_date, address from tbshow t
-                    inner join tbuser t2 on t2.id = t.user_id
-                    inner join tbshowagency t3 on t3.user_id = t2.id
-                    inner join tbuserpurchase t4 on t4.user_id = t2.id
-                    inner join tbticket t5 on t5.id = t4.ticket_id
-                    where t2.id = ?";
+        $sql = " select fantasy_name, purchased_at, t1.price_purchased, t2.description, title, start_date, end_date, address from tbuserpurchase t1 
+                  inner join tbticket t2 on t2.id = t1.ticket_id
+                  inner join tbshow t3 on t3.id = t2.show_id
+                  inner join tbuser t4 on t3.user_id = t4.id
+                  inner join tbshowagency t5 on t5.user_id = t4.id
+                  where t1.user_id = ?";
         return $this->raw($sql, [$userId])->fetch();
     }
 

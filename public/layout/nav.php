@@ -13,7 +13,8 @@
     crossorigin="anonymous" referrerpolicy="no-referrer" />
 <nav aria-label="breadcrumb">
     <ol class="breadcrumb  navbar-dark bg-dark">
-        <li class="breadcrumb-item active" aria-current="page"><a href="/">Home</a></li>
+    <li class="breadcrumb-item active" aria-current="page"><a href="/">Home</a></li>
+        <li class="breadcrumb-item active" aria-current="page"><a href="/welcome">Minha Conta</a></li>
         <li class="breadcrumb-item active" aria-current="page"><a href="/login">Entrar</a></li>
         <li class="breadcrumb-item active" aria-current="page"><a href="/checkout"><i class="fas fa-shopping-cart fa-lg"></i></a></li>
     </ol>

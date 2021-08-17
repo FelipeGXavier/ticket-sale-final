@@ -40,52 +40,76 @@
     </main>
 </body>
 <script>
-
 function getCheckout() {
-    const checkoutItems = JSON.parse(localStorage.getItem("checkout")) || [];
+    const checkoutItems = JSON.parse(localStorage.getItem("checkout") || '[]');
     const showIds = [...new Set(checkoutItems.map(x => x['showId']))];
     const ticketIds = [...new Set(checkoutItems.map(x => x['ticketId']))];
     const form = new FormData();
-    form.append("json", JSON.stringify({
-        showIds,
-        ticketIds
-    }));
-    return form;
+    if (showIds.length > 0 && ticketIds.length > 0) {
+        form.append("json", JSON.stringify({
+            showIds,
+            ticketIds
+        }));
+        return form;
+    }
+    return null;
 }
 
+const checkout = getCheckout();
 
-fetch("/ajax/ticket_checkout.php", {
-    method: 'POST',
-    body: getCheckout()
-}).then(res => res.json()).then(res => {
-    const table = document.querySelector("table.table > thead");
-    let html = "";
-    res.tickets.forEach(ticket => {
-        html += `
+if (checkout != null) {
+
+
+
+    fetch("/ajax/ticket_checkout.php", {
+        method: 'POST',
+        body: getCheckout()
+    }).then(res => res.json()).then(res => {
+        const table = document.querySelector("table.table > thead");
+        let html = "";
+        res.tickets.forEach(ticket => {
+            html += `
                 <tr>
                     <td>${ticket['fantasy_name']}</td>
                     <td>${ticket['title']}</td>
                     <td>${ticket['description']}</td>
                     <td>${ticket['price']}</td>
                     <td>1</td>
+                    <td><button onclick="remove(${ticket['ticket_id']}, ${ticket['show_id']})" class="btn btn-danger">X</button></td>
                 </tr>
             `;
+        });
+        const btn = document.getElementById("checkout");
+        const prices = res.tickets.map(ticket => ticket.price);
+        const totalPrice = prices.reduce((prev, curr) => prev + curr);
+        const totalHtml = `<p>Total R$: <b> ${totalPrice} </b> </p>`;
+        btn.insertAdjacentHTML('beforebegin', totalHtml);
+        table.insertAdjacentHTML('afterend', html);
     });
-    const btn = document.getElementById("checkout");
-    const prices = res.tickets.map(ticket => ticket.price);
-    const totalPrice = prices.reduce((prev, curr) => prev + curr);
-    const totalHtml = `<p>Total R$: <b> ${totalPrice} </b> </p>`;
-    btn.insertAdjacentHTML('beforebegin', totalHtml);
-    table.insertAdjacentHTML('afterend', html);
-});
+
+}
+
+
+function remove(show, ticket) {
+    const cart = JSON.parse(localStorage.getItem("checkout") || '[]');
+    const newCart = [];
+    cart.forEach(x => {
+        if (x['ticketId'] != ticket && x['showId'] != show) {
+            newCart.push(x);
+        }
+    })
+    localStorage.clear();
+    localStorage.setItem("checkout", JSON.stringify(newCart));
+    window.location.href = '/checkout';
+}
 
 function purchase() {
     fetch("/ajax/ticket_purchase.php", {
         method: 'POST',
         body: getCheckout()
-    }).then(res => res.json()).then(res => {
-        localStorage.removeItem("checkout");
-        window.location.href = "/checkout";
+    }).then(res => {
+        localStorage.clear();
+        window.location.href = '/ticket-history';
     });
 }
 </script>
