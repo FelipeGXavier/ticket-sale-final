@@ -1,6 +1,6 @@
 O projeto utiliza um *mini* router implementado então somente jogar o projeto no apache não irá funcionar. Para rodar com o servidor embutido do PHP: 
 
-O composer está para fazer o carregamento das classes conforme a PSR-4, primeiro rodar no diretório do projeto (não há bibliotecas externas):
+O composer está presente no projeto para fazer o carregamento das classes conforme a PSR-4, primeiro rodar no diretório do projeto (não há bibliotecas externas):
 
 ``composer install``
 
