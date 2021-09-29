@@ -1,0 +1,4 @@
+- Formatação de datas dd/MM/yyyy
+- Validação e mensagens Javascript e PHP
+- Inclusão de usuários do tipo admin através da conta do adminisitrador, manter esse histórico
+- Envio de e-mail um dia antes para compradores lembrando a data
