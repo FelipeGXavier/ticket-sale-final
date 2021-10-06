@@ -6,7 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-    <?php require_once(PATH . '\public\layout\bootstrap.php') ?>
+    <?php require_once(PATH .  LINE_SEPARATOR .'public' . LINE_SEPARATOR . 'layout' . LINE_SEPARATOR . 'bootstrap.php') ?>
     <?php if ($_SESSION['user_type'] !== 0) header("Location: login"); ?>
     <?php if ($_SESSION['welcome'] == true) header("Location: welcome"); ?>
 </head>
@@ -18,7 +18,7 @@
 </style>
 
 <body>
-    <?php require_once(PATH . '\public\layout\nav.php') ?>
+    <?php require_once(PATH . LINE_SEPARATOR . 'public '. LINE_SEPARATOR . 'layout' . LINE_SEPARATOR . 'nav.php') ?>
     <h4 id="title">Antes de prosseguir você deve cadastrar sua agência</h4>
     <main id="container">
         <div class="row d-flex justify-content-center form-box">

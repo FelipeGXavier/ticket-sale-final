@@ -1,5 +1,5 @@
-<?php require_once(PATH . '\public\layout\bootstrap.php') ?>
-<?php require_once(PATH . '\public\layout\nav.php') ?>
+<?php require_once(PATH .  LINE_SEPARATOR . 'public ' . LINE_SEPARATOR . 'layout' . LINE_SEPARATOR . 'bootstrap.php') ?>
+<?php require_once(PATH . LINE_SEPARATOR . 'public ' . LINE_SEPARATOR . 'layout' . LINE_SEPARATOR . 'nav.php') ?>
 <!DOCTYPE html>
 <html lang="en">
 
