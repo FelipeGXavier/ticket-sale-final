@@ -35,7 +35,7 @@
     <main class="wrapper">
         <h1><?php echo $show[0]['title'] ?></h1>
         <div class="space-box">
-            <span><i class="far fa-clock icon-mr"></i><?php echo $show[0]['start_date'] . "<b> até </b>" . $show[0]['end_date']; ?></span>
+            <span><i class="far fa-clock icon-mr"></i><?php echo ((new DateTime($show[0]['start_date']))->format('d/m/Y')) . "<b> até </b>" . ((new DateTime($show[0]['end_date']))->format('d/m/Y')); ?></span>
         </div>
         <div class="space-box">
             <span><i class="fas fa-map-marker-alt icon-mr"></i><?php echo $show[0]['address'] ?></span>

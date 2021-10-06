@@ -73,7 +73,7 @@ body {
                             <h5><?php echo $show['title'] ?></h5>
                         </div>
                         <div><span><?php echo $show['address'] ?></span></div>
-                        <div><span><?php echo $show['start_date'] . "<b> até </b>" . $show['end_date']; ?> </span></div>
+                        <div><span><?php echo ((new DateTime($show['start_date']))->format('d/m/Y')) . "<b> até </b>" . ((new DateTime($show['end_date']))->format('d/m/Y')); ?> </span></div>
                         <a href="<?php $id = $show['id']; echo "/detail?id=$id"; ?>" class="btn btn-info mt-2">Ver mais</a>
                     </div>
                 </div>

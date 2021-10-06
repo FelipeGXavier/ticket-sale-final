@@ -123,7 +123,6 @@ btn.addEventListener('click', (e) => {
 
     const ticketsRefs = [...document.querySelectorAll("div.ticket-card")];
     const tickets = [];
-    console.log(ticketsRefs);
     ticketsRefs.forEach(ticket => {
         const descTicket = ticket.querySelector("div.form-group > input[name='desc_ticket']").value ||
             "";
@@ -150,16 +149,13 @@ btn.addEventListener('click', (e) => {
     form.append("json", JSON.stringify(requestData));
     form.append("thumbnail", thumbnail);
 
-    console.log(form);
 
     fetch("/create-show", {
         method: 'POST',
         body: form
     }).then(res => {
-        console.log(res.status)
         if (res.status != 200) {
             const box = document.getElementById("message");
-            console.log(box);
             box.insertAdjacentHTML("afterbegin",
                 `<div class='alert alert-danger'><b>Campos Inválidos</b></div>`);
             window.scrollTo(0, 0);

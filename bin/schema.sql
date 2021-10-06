@@ -68,7 +68,7 @@ create table tbticket
     active      bool        not null default true,
     show_id     int         not null,
     qtd_ticket  int         not null,
-    created     date                 default now(),
+    created     datetime                 default now(),
     description varchar(50) not null,
     foreign key (show_id) references tbshow (id)
 );
@@ -79,7 +79,7 @@ create table tbuserpurchase
     user_id         int   not null,
     ticket_id       int   not null,
     price_purchased float not null,
-    purchased_at    date  not null default now(),
+    purchased_at    datetime  not null default now(),
     primary key (user_id, ticket_id),
     foreign key (user_id) references tbuser (id),
     foreign key (ticket_id) references tbticket (id)
@@ -90,7 +90,7 @@ create table tbclicktracking
     id         int         not null primary key auto_increment,
     ip         varchar(30) not null,
     show_id    int         not null,
-    created_at date        not null default now(),
+    created_at datetime        not null default now(),
     foreign key (show_id) references tbshow (id)
 );
 
@@ -101,3 +101,4 @@ values (null, 'Gastronomia');
 insert into tbsegment
 values (null, 'Cultura');
  
+ insert into tbuser values (2, 'admin', '0000-00-00', 'admin2@admin', '$2y$10$olUYBusb1wP8nRuhLRmEFuAJ1YkaMn9FhxjpeuYEwmDcNeq0jpVwq', 2, 1, 1);

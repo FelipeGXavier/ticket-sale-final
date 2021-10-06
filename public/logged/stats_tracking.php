@@ -52,6 +52,14 @@ google.charts.setOnLoadCallback(drawChart);
 function drawChart() {
 
     fetchTrackingData().then(res => res.json()).then(info => {
+        const elementClick = document.getElementById('chart_div_click');
+        const elementClickView = document.getElementById('chart_div_click_show');
+
+        if (info == null || info['click_show'].length == 0 && info['click_day'].length == 0) {
+            elementClick.innerHTML = "Nenhuma Informação para exibir";
+            return;
+        }
+
         var data = new google.visualization.DataTable();
         data.addColumn('string', 'Dia');
         data.addColumn('number', 'Clicks');

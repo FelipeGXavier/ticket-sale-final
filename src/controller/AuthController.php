@@ -43,7 +43,7 @@ class AuthController extends Controller
             $schema['result']['welcome'] = false;
         }
         $this->userModel->create($schema['result']);
-        $this->view->redirect('create-login');
+        $this->view->redirect('login');
     }
 
     public function postLogin() {

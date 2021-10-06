@@ -48,6 +48,13 @@ function drawChart() {
 
     fetchTrackingData().then(res => res.json()).then(info => {
 
+        const element = document.getElementById('chart_div');
+
+        if (info == null || info['ticket_sales'].length == 0) {
+            element.innerHTML = "Nenhuma Informação para exibir";
+            return;
+        }
+
         var data = new google.visualization.DataTable();
         data.addColumn('string', 'Evento');
         data.addColumn('number', 'Vendas');

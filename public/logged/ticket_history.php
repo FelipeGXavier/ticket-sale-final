@@ -18,7 +18,7 @@
                 <h4><?php echo $ticket['title'] ?></h4>
                 <div class="space-box">
                     <span><i class="far fa-clock icon-mr"></i>
-                        <?php echo "Ocorre em: " . $ticket['start_date'] . "<b> até </b>" . $ticket['end_date']; ?>
+                        <?php echo "Ocorre em: " . ((new DateTime($ticket['start_date']))->format('d/m/Y')) . "<b> até </b>" . ((new DateTime($ticket['end_date']))->format('d/m/Y')); ?>
                     </span>
                 </div>
                 <div class="space-box">
