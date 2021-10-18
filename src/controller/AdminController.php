@@ -20,6 +20,14 @@ class AdminController extends Controller
         $this->view->render('logged/approve', ['pendings' => $pending]);
     }
 
+    public function getRevoke() {
+        $id = Validator::sanitize($this->request->getParam("id"), 'int');
+        if($id && $id > 0) {
+            $this->adminModel->revoke($id);
+        }
+        $this->view->redirect('approve');
+    }
+
     public function getApprove() {
         $id = Validator::sanitize($this->request->getParam("id"), 'int');
         if($id && $id > 0) {

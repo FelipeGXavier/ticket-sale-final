@@ -36,7 +36,11 @@
                         echo "<td>$cnpj</td>";
                         echo "<td>$fantasy_name</td>";
                         echo "<td><a href='mailto: $email'>$email</a></td>";
-                        echo "<td><a href='/approve-agent?id=$userId'>Aprovar</a></td>";
+                        $action = "<td><a href='/approve-agent?id=$userId'>Aprovar</a></td>";
+                        if ($pending['accept']) {
+                          $action = "<td><a href='/revoke-agent?id=$userId'>Revogar</a></td>";
+                        }
+                        echo $action;
                       }
                     ?>
                 </tbody>

@@ -65,7 +65,7 @@ body {
             <?php if(isset($_SESSION['user_type']) && $_SESSION['user_type'] == 2) {
                 echo '<li class="nav-item"><a class="nav-link" href="/approvals">Aprovações</a></li>';
             } ?>
-
+            
             <?php 
                 if(isset($_SESSION['user_type']) && $_SESSION['user_type'] == 0) {
                   if($_SESSION['accept']) {

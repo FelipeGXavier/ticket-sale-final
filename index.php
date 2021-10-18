@@ -204,6 +204,16 @@ if (!strrpos($fullPath, 'public')) {
         $view->redirect("/");
     });
 
+    $app->get('/revoke-agent', function ($request) use ($datasource) {
+        $view = new View();
+        if (Session::get("user_type") !== null &&  Session::get("user_type") == UserModel::USER_TYPE_ADMIN) {
+            $adminModel = new AdminModel($datasource);
+            $adminController = new AdminController($request, $adminModel);
+            $adminController->getRevoke();
+        }
+        $view->redirect("/");
+    });
+
     $app->get('/create-agency', function ($request) use ($datasource) {
         $view = new View();
         if (Session::get("user_type") !== null &&  Session::get("user_type") == UserModel::USER_TYPE_AGENT) {

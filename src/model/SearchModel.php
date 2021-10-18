@@ -10,17 +10,17 @@ class SearchModel extends AbstractDAO
 
     public function findShowsSearch($params)
     {
-        $sql = "select id, thumbnail, title, start_date, end_date, address from tbshow WHERE 1 = 1";
+        $sql = "select id, thumbnail, title, start_date, end_date, address from tbshow WHERE 1 = 1 AND user_id in (select id from tbuser where accept = true)";
         if (isset($params['uf'])) {
             $uf = $params['uf'];
             $sql = "select t1.id, thumbnail, title, start_date, end_date, address from tbshow t1
                         inner join tbuser t2 on t2.id = t1.user_id
                         inner join tbshowagency t3 on t3.user_id = t2.id
-                        WHERE 1 = 1 and uf = '$uf'";
+                        WHERE 1 = 1 and uf = '$uf' AND user_id in (select id from tbuser where accept = true)";
         }
         if (isset($params['keyword'])) {
             $key= $params['keyword'];
-            $sql .= " and lower(title) like '%$key%'";
+            $sql .= " and lower(title) like '%$key%' AND user_id in (select id from tbuser where accept = true)";
         }
         return $this->raw($sql)->fetch();
     }
