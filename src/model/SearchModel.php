@@ -10,17 +10,29 @@ class SearchModel extends AbstractDAO
 
     public function findShowsSearch($params)
     {
-        $sql = "select id, thumbnail, title, start_date, end_date, address from tbshow WHERE 1 = 1 AND user_id in (select id from tbuser where accept = true)";
-        if (isset($params['uf'])) {
+        $sql = "select id, thumbnail, title, start_date, end_date, address from tbshow t1 WHERE 1 = 1 AND t1.user_id in (select id from tbuser where accept = true)";
+        $key = null;
+        $uf = null;
+        if (isset($params['uf']) && !empty($params['uf'])) {
             $uf = $params['uf'];
             $sql = "select t1.id, thumbnail, title, start_date, end_date, address from tbshow t1
                         inner join tbuser t2 on t2.id = t1.user_id
                         inner join tbshowagency t3 on t3.user_id = t2.id
-                        WHERE 1 = 1 and uf = '$uf' AND user_id in (select id from tbuser where accept = true)";
+                        WHERE 1 = 1 and uf = ? AND t1.user_id in (select id from tbuser where accept = true)";
         }
         if (isset($params['keyword'])) {
-            $key= $params['keyword'];
-            $sql .= " and lower(title) like '%$key%' AND user_id in (select id from tbuser where accept = true)";
+            $key = $params['keyword'];
+            $sql .= " and lower(title) like CONCAT(?, '%')";
+        }
+        
+        if($uf != null && $key != null) {
+            return $this->raw($sql, [$uf, $key])->fetch();
+        }
+        if($uf != null && $key == null) {
+            return $this->raw($sql, [$uf])->fetch();
+        }
+        if($uf == null && $key != null) {
+            return $this->raw($sql, [$key])->fetch();
         }
         return $this->raw($sql)->fetch();
     }

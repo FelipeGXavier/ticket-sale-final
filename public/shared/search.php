@@ -20,6 +20,7 @@ body {
                     <div class="form-group">
                         <label>Estado:</label>
                         <select class="form-control" name="uf">
+                            <option value="">Selecione um estado</option>
                             <option value="AC">Acre</option>
                             <option value="AL">Alagoas</option>
                             <option value="AP">Amapá</option>
