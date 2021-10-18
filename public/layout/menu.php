@@ -63,7 +63,7 @@ body {
         <ul class="navbar-nav mr-auto sidenav" id="navAccordion">
 
             <?php if(isset($_SESSION['user_type']) && $_SESSION['user_type'] == 2) {
-                echo '<li class="nav-item"><a class="nav-link" href="/approvals">Aprovações</a></li>';
+                echo '<li class="nav-item"><a class="nav-link" href="/approve">Aprovações</a></li>';
             } ?>
             
             <?php 

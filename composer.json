@@ -8,7 +8,8 @@
     ],
     "require": {
       "ext-pdo": "*",
-      "ext-json": "*"
+      "ext-json": "*",
+        "sendgrid/sendgrid": "^7.9"
     },
     "autoload": {
         "psr-4": {

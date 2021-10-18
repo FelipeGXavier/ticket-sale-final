@@ -94,6 +94,14 @@ create table tbclicktracking
     foreign key (show_id) references tbshow (id)
 );
 
+create table tbemailtracking (
+	id         int         not null primary key auto_increment,
+    status_code int,
+    headers varchar(400),
+    body varchar(100),
+    exception varchar(1000)
+);
+
 insert into tbsegment
 values (null, 'Música');
 insert into tbsegment
@@ -101,4 +109,4 @@ values (null, 'Gastronomia');
 insert into tbsegment
 values (null, 'Cultura');
  
- insert into tbuser values (2, 'admin', '0000-00-00', 'admin2@admin', '$2y$10$olUYBusb1wP8nRuhLRmEFuAJ1YkaMn9FhxjpeuYEwmDcNeq0jpVwq', 2, 1, 1);
+insert into tbuser values (2, 'admin', '0000-00-00', 'admin@admin.com', '$2y$10$olUYBusb1wP8nRuhLRmEFuAJ1YkaMn9FhxjpeuYEwmDcNeq0jpVwq', 2, 1, 1);

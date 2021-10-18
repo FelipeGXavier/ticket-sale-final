@@ -42,7 +42,11 @@ class AuthController extends Controller
             $schema['result']['accept'] = false;
             $schema['result']['welcome'] = false;
         }
-        $this->userModel->create($schema['result']);
+        try{
+            $this->userModel->create($schema['result']);
+        }catch(\Exception $e) {
+            $this->view->render('login/create_login', ['message' => 'E-mail ou senha inválido']);
+        }
         $this->view->redirect('login');
     }
 
