@@ -9,7 +9,8 @@
     "require": {
       "ext-pdo": "*",
       "ext-json": "*",
-        "sendgrid/sendgrid": "^7.9"
+        "sendgrid/sendgrid": "^7.9",
+        "fakerphp/faker": "^1.16"
     },
     "autoload": {
         "psr-4": {
