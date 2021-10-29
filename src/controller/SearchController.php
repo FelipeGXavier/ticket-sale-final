@@ -19,7 +19,7 @@ class SearchController extends Controller
         $this->purchaseModel = $purchaseModel;
     }
 
-    public function getSearch()
+    public function getSearch($key)
     {
         $uf = $this->request->getParam("uf");
         $keyword = $this->request->getParam("keyword");
@@ -30,7 +30,7 @@ class SearchController extends Controller
         if ($keyword != null) {
             $params['keyword'] = $keyword;
         }
-        $shows = $this->searchModel->findShowsSearch($params);
+        $shows = $this->searchModel->findShowsSearch($params, $key);
         $this->view->render("shared/search", ['shows' => $shows]);
     }
 

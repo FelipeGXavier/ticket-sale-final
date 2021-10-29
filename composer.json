@@ -10,7 +10,8 @@
       "ext-pdo": "*",
       "ext-json": "*",
         "sendgrid/sendgrid": "^7.9",
-        "fakerphp/faker": "^1.16"
+        "fakerphp/faker": "^1.16",
+        "predis/predis": "^1.1"
     },
     "autoload": {
         "psr-4": {

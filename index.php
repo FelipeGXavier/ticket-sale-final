@@ -21,12 +21,14 @@ use App\Model\AdminModel;
 use App\Model\AgencyModel;
 use App\Model\ClientModel;
 use App\Model\PurchaseModel;
+use App\Model\SearchKey;
 use App\Model\SearchModel;
 use App\Model\SegmentModel;
 use App\Model\StatsModel;
 use App\Model\UserModel;
 use App\Util\Util;
 use Core\App;
+use Core\Cache;
 use Core\Session;
 use Core\View;
 
@@ -35,13 +37,23 @@ session_start();
 $fullPath = "http://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
 
 if (!strrpos($fullPath, 'public')) {
-
+    
     $datasource = new Datasource();
     $app = new App();
 
     $app->get("/", function ($request) use ($datasource) {
-        $agencyController = new SearchController($request, new SearchModel($datasource), new PurchaseModel($datasource));
-        $agencyController->getSearch();
+        $params = [];
+        parse_str($_SERVER['QUERY_STRING'] ?? [], $params);
+        $key = (new SearchKey($params['uf'] ?? '', $params['keyword'] ?? ''))->__toString();
+        $redis = Cache::connection();
+        $res = $redis->get($key);
+        if ($res != null) {
+            $view = new View();
+            $view->render("shared/search", ['shows' => json_decode($res, true)]);
+        } else {
+            $agencyController = new SearchController($request, new SearchModel($datasource), new PurchaseModel($datasource));
+            $agencyController->getSearch($key);
+        }
     });
 
     $app->post("/checkout", function ($request) use ($datasource) {
