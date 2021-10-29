@@ -12,6 +12,7 @@ $faker = Faker\Factory::create();
 $datasource = new Datasource();
 $agency = new AgencyModel($datasource);
 
+
 for ($i = 0; $i < 1000; $i++) {
     $sqlShow = "INSERT into tbshow (cep, thumbnail, title, description, address, start_date, end_date, user_id) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
     $sqlTicket = "INSERT into tbticket (description, price, qtd_ticket, show_id)  VALUES (?, ?, ?, ?)";
@@ -27,7 +28,7 @@ for ($i = 0; $i < 1000; $i++) {
     ];
     $ticket = [
         [
-            'description' => $faker->text(),
+            'description' => $faker->text(10),
             'price' => $faker->randomNumber(5, false),
             'qtd_ticket' => $faker->randomNumber(5, false)
         ]
