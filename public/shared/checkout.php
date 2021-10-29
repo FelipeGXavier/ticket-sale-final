@@ -5,8 +5,8 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <?php require_once(PATH . '\public\layout\bootstrap.php') ?>
-    <?php require_once(PATH . '\public\layout\nav.php') ?>
+    <?php require_once(PATH .  LINE_SEPARATOR .'public' . LINE_SEPARATOR . 'layout' . LINE_SEPARATOR . 'bootstrap.php') ?>
+    <?php require_once(PATH .  LINE_SEPARATOR . 'public' . LINE_SEPARATOR . 'layout' . LINE_SEPARATOR . 'nav.php') ?>
     <title>Document</title>
 </head>
 <style>
