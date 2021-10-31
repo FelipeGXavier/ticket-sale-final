@@ -23,6 +23,7 @@ class SearchController extends Controller
     {
         $uf = $this->request->getParam("uf");
         $keyword = $this->request->getParam("keyword");
+        $page = $this->request->getParam("page") ?? 0;
         $params = [];
         if ($uf != null) {
             $params['uf'] = $uf;
@@ -30,6 +31,7 @@ class SearchController extends Controller
         if ($keyword != null) {
             $params['keyword'] = $keyword;
         }
+        $params['page'] = $page;
         $shows = $this->searchModel->findShowsSearch($params, $key);
         $this->view->render("shared/search", ['shows' => $shows]);
     }

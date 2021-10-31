@@ -25,18 +25,19 @@ class SearchModel extends AbstractDAO
             $key = $params['keyword'];
             $sql .= " and lower(title) like CONCAT(?, '%')";
         }
+        $sql .= " LIMIT 10 OFFSET ?";
         $result = null;
         if($uf != null && $key != null) {
-            $result = $this->raw($sql, [$uf, $key])->fetch();
+            $result = $this->raw($sql, [$uf, $key, $params['page']])->fetch();
         }else if($uf != null && $key == null) {
-            $result = $this->raw($sql, [$uf])->fetch();
+            $result = $this->raw($sql, [$uf, $params['page']])->fetch();
         }else if($uf == null && $key != null) {
-            $result = $this->raw($sql, [$key])->fetch();
+            $result = $this->raw($sql, [$key, $params['page']])->fetch();
         } else {
-            $result = $this->raw($sql)->fetch();
+            $result = $this->raw($sql, [$params['page']])->fetch();
         }
         $redis = Cache::connection();
-        $redis->set($keySearch, (string) json_encode($result));
+        //$redis->set($keySearch, (string) json_encode($result));
         return $result;
     }
 

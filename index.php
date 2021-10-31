@@ -47,13 +47,13 @@ if (!strrpos($fullPath, 'public')) {
         $key = (new SearchKey($params['uf'] ?? '', $params['keyword'] ?? ''))->__toString();
         $redis = Cache::connection();
         $res = $redis->get($key);
-        if ($res != null) {
-            $view = new View();
-            $view->render("shared/search", ['shows' => json_decode($res, true)]);
-        } else {
+        // if ($res != null) {
+        //     $view = new View();
+        //     $view->render("shared/search", ['shows' => json_decode($res, true)]);
+        // } else {
             $agencyController = new SearchController($request, new SearchModel($datasource), new PurchaseModel($datasource));
             $agencyController->getSearch($key);
-        }
+        // }
     });
 
     $app->post("/checkout", function ($request) use ($datasource) {
