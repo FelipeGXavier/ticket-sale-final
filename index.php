@@ -44,16 +44,16 @@ if (!strrpos($fullPath, 'public')) {
     $app->get("/", function ($request) use ($datasource) {
         $params = [];
         parse_str($_SERVER['QUERY_STRING'] ?? [], $params);
-        $key = (new SearchKey($params['uf'] ?? '', $params['keyword'] ?? ''))->__toString();
+        $key = (new SearchKey($params['uf'] ?? '', $params['keyword'] ?? '', $params['page'] ?? 0))->__toString();
         $redis = Cache::connection();
         $res = $redis->get($key);
-        // if ($res != null) {
-        //     $view = new View();
-        //     $view->render("shared/search", ['shows' => json_decode($res, true)]);
-        // } else {
+        if ($res != null) {
+            $view = new View();
+            $view->render("shared/search", ['shows' => json_decode($res, true)]);
+        } else {
             $agencyController = new SearchController($request, new SearchModel($datasource), new PurchaseModel($datasource));
             $agencyController->getSearch($key);
-        // }
+        }
     });
 
     $app->post("/checkout", function ($request) use ($datasource) {

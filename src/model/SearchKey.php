@@ -6,11 +6,13 @@ class SearchKey {
 
     private $uf;
     private $title;
+    private $page;
 
-    public function __construct($uf, $title)
+    public function __construct($uf, $title, $page)
     {
         $this->uf = trim(strtolower($uf));
         $this->title = trim(strtolower($title));
+        $this->page = $page;
     }
 
     public function __toString()
@@ -20,8 +22,9 @@ class SearchKey {
             $result .= "uf:" . $this->uf . ";";
         }
         if (!is_null($this->title)) {
-            $result .= "title:" . $this->title;
+            $result .= "title:" . $this->title . ";";
         }
+        $result .= "page:" . $this->page;
         return $result;
     }
 }

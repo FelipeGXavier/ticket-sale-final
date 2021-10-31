@@ -37,7 +37,7 @@ class SearchModel extends AbstractDAO
             $result = $this->raw($sql, [$params['page']])->fetch();
         }
         $redis = Cache::connection();
-        //$redis->set($keySearch, (string) json_encode($result));
+        $redis->set($keySearch, (string) json_encode($result));
         return $result;
     }
 
