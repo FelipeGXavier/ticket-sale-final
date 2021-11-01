@@ -6,7 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-    <?php require_once(PATH . '\public\layout\bootstrap.php') ?>
+    <?php require_once(PATH .  LINE_SEPARATOR .'public' . LINE_SEPARATOR . 'layout' . LINE_SEPARATOR . 'bootstrap.php') ?>
 </head>
 
 <style>
@@ -36,7 +36,7 @@ body {
 
 <body>
 
-    <?php require_once(PATH . '\public\layout\nav.php') ?>
+    <?php require_once(PATH . LINE_SEPARATOR . 'public'. LINE_SEPARATOR . 'layout' . LINE_SEPARATOR . 'nav.php') ?>
     <main id="container">
         <div class="row d-flex justify-content-center form-box">
             <div class="col-md-4">

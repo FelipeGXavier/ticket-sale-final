@@ -9,6 +9,7 @@ error_reporting(E_ALL);
 define('PATH', getcwd());
 define('ROOT_PATH', dirname(__DIR__) . '/');
 define('APP_DIRECTORY', 'ticket-sale-final');
+define('LINE_SEPARATOR', '/');
 
 use App\Controller\AdminController;
 use App\Controller\AgencyController;
