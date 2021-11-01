@@ -3,15 +3,12 @@
 namespace App\Controller;
 
 use App\Model\UserModel;
-use App\Util\FileUploader;
 use Core\Controller;
 use Core\Session;
 use Core\Validator;
 
 class AgencyController extends Controller
 {
-
-    use FileUploader;
 
     private $segmentModel;
     private $agencyModel;
@@ -175,6 +172,14 @@ class AgencyController extends Controller
             $result[$key] = str_replace(',', " | ", $value);
         }
         return $result;
+    }
+
+    private function upload($path, $ext)
+    {
+        $randomName = substr(str_shuffle("0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"), 0, 10);;
+        $uploadPath = PATH . "\bin\\" . $randomName . '.' . $ext;
+        move_uploaded_file($path, $uploadPath);
+        return $randomName . '.' . $ext;
     }
 
 }

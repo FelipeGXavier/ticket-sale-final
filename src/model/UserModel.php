@@ -10,8 +10,6 @@ class UserModel extends \Core\AbstractDAO
 
     public function create($input) {
         $sql = 'INSERT INTO tbuser (name, email, password, birth, user_type, accept, welcome) VALUES (?, ?, ?, ?, ?, ?, ?)';
-        var_dump($sql, $input);
-        die();
         return $this->raw($sql, array_values($input));
     }
 

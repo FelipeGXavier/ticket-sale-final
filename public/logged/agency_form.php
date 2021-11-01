@@ -18,7 +18,7 @@
 </style>
 
 <body>
-    <?php require_once(PATH . LINE_SEPARATOR . 'public '. LINE_SEPARATOR . 'layout' . LINE_SEPARATOR . 'nav.php') ?>
+    <?php require_once(PATH . LINE_SEPARATOR . 'public'. LINE_SEPARATOR . 'layout' . LINE_SEPARATOR . 'nav.php') ?>
     <h4 id="title">Antes de prosseguir você deve cadastrar sua agência</h4>
     <main id="container">
         <div class="row d-flex justify-content-center form-box">
