@@ -4,11 +4,12 @@ namespace App\Model;
 
 use App\Util\Util;
 use Core\AbstractDAO;
+use Core\Cache;
 
 class SearchModel extends AbstractDAO
 {
 
-    public function findShowsSearch($params)
+    public function findShowsSearch($params, $keySearch)
     {
         $sql = "select id, thumbnail, title, start_date, end_date, address from tbshow t1 WHERE 1 = 1 AND t1.user_id in (select id from tbuser where accept = true)";
         $key = null;
@@ -24,17 +25,20 @@ class SearchModel extends AbstractDAO
             $key = $params['keyword'];
             $sql .= " and lower(title) like CONCAT(?, '%')";
         }
-        
+        $sql .= " LIMIT 10 OFFSET ?";
+        $result = null;
         if($uf != null && $key != null) {
-            return $this->raw($sql, [$uf, $key])->fetch();
+            $result = $this->raw($sql, [$uf, $key, $params['page']])->fetch();
+        }else if($uf != null && $key == null) {
+            $result = $this->raw($sql, [$uf, $params['page']])->fetch();
+        }else if($uf == null && $key != null) {
+            $result = $this->raw($sql, [$key, $params['page']])->fetch();
+        } else {
+            $result = $this->raw($sql, [$params['page']])->fetch();
         }
-        if($uf != null && $key == null) {
-            return $this->raw($sql, [$uf])->fetch();
-        }
-        if($uf == null && $key != null) {
-            return $this->raw($sql, [$key])->fetch();
-        }
-        return $this->raw($sql)->fetch();
+        $redis = Cache::connection();
+        $redis->set($keySearch, (string) json_encode($result));
+        return $result;
     }
 
     public function findShowDetails($id)
